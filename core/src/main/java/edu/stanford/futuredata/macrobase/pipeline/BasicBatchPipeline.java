@@ -193,10 +193,6 @@ public class BasicBatchPipeline implements Pipeline {
         log.info("Metric: {}", metric);
         log.info("Attributes: {}", attributes);
 
-        if(numRows >= 0){
-            df = df.limit(numRows);
-            log.info("Limiting on {} rows", numRows);
-        }
         if(!columnFiltersJson.equals("")){
             Map<String, Object> columnFilters = PipelineUtils.jsonStringToMap(columnFiltersJson);
             for(String columnName: columnFilters.keySet()) {
@@ -205,6 +201,12 @@ public class BasicBatchPipeline implements Pipeline {
                 log.info("Filtering on column {} == {}", columnName, columnFilters.get(columnName));
             }
         }
+
+        if(numRows >= 0){
+            df = df.limit(numRows);
+            log.info("Limiting on {} rows", numRows);
+        }
+
         return df;
     }
 }
